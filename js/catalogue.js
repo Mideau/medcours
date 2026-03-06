@@ -268,3 +268,207 @@ const CATALOGUE = {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = CATALOGUE;
 }
+
+
+// =====================================================
+// BIBLIOTHÈQUE — Livres open source en PDF
+// =====================================================
+// Pour ajouter un livre :
+// 1. Placez votre PDF dans le dossier pdfs/
+// 2. Copiez un bloc ci-dessous et modifiez les champs
+//
+// Champs :
+// - id       : identifiant unique (ex: "livre-1")
+// - title    : titre du livre
+// - author   : auteur(s)
+// - description : courte description
+// - category : catégorie (ex: "Anatomie", "Physiologie", "Biochimie"...)
+// - pdf      : chemin vers le fichier PDF (depuis la racine du site)
+// - date     : année ou date de publication (optionnel)
+
+const BIBLIOTHEQUE = [
+    {
+        id: "lib-anat-1",
+        title: "Introduction à l'Anatomie Humaine",
+        author: "Département d'Anatomie",
+        description: "Bases fondamentales de l'anatomie humaine, structures et repères osseux.",
+        category: "Anatomie",
+        pdf: "pdfs/anatomie-intro.pdf",
+        date: "2024"
+    },
+    {
+        id: "lib-physio-1",
+        title: "Physiologie Fondamentale",
+        author: "Équipe pédagogique",
+        description: "Fonctionnement des grands systèmes physiologiques de l'organisme.",
+        category: "Physiologie",
+        pdf: "pdfs/physio-1.pdf",
+        date: "2024"
+    },
+    {
+        id: "lib-biochim-1",
+        title: "Biochimie des Glucides et Lipides",
+        author: "Département de Biochimie",
+        description: "Métabolisme des glucides et des lipides, voies métaboliques essentielles.",
+        category: "Biochimie",
+        pdf: "pdfs/biochimie-glucides.pdf",
+        date: "2024"
+    },
+    {
+        id: "lib-pharma-1",
+        title: "Manuel de Pharmacologie",
+        author: "Équipe de Pharmacologie",
+        description: "Principes généraux de pharmacologie, classes thérapeutiques principales.",
+        category: "Pharmacologie",
+        pdf: "pdfs/pharma-intro.pdf",
+        date: "2024"
+    },
+    {
+        id: "lib-micro-1",
+        title: "Microbiologie & Bactériologie",
+        author: "Département de Microbiologie",
+        description: "Classification bactérienne, mécanismes d'infection et antibiothérapie.",
+        category: "Microbiologie",
+        pdf: "pdfs/micro-bacterio.pdf",
+        date: "2024"
+    },
+    {
+        id: "lib-neuro-1",
+        title: "Neuroanatomie Clinique",
+        author: "Département de Neurologie",
+        description: "Organisation du système nerveux central et périphérique, voies nerveuses.",
+        category: "Neurologie",
+        pdf: "pdfs/neuro-anatomie.pdf",
+        date: "2024"
+    }
+];
+
+
+// =====================================================
+// EXAMENS — Sujets et annales d'examens
+// =====================================================
+// Pour ajouter un examen :
+// 1. Placez votre PDF dans le dossier pdfs/
+// 2. Copiez un bloc ci-dessous et modifiez les champs
+//
+// Champs :
+// - id      : identifiant unique
+// - title   : intitulé de l'examen
+// - subject : matière concernée
+// - year    : année d'études (ex: "P1", "P2", "D1", "D2")
+// - type    : type d'épreuve ("QCM", "Rédaction", "Oral", "Pratique")
+// - pdf     : chemin vers le fichier PDF
+// - date    : date de l'examen (ex: "Juin 2023")
+
+const EXAMENS = [
+    {
+        id: "exam-anat-2023",
+        title: "Examen Anatomie — Session Juin 2023",
+        subject: "Anatomie",
+        year: "P1",
+        type: "QCM",
+        pdf: "pdfs/anatomie-annales-2023.pdf",
+        date: "Juin 2023"
+    },
+    {
+        id: "exam-physio-td",
+        title: "Épreuve Physiologie — Électrophysiologie",
+        subject: "Physiologie",
+        year: "P1",
+        type: "Rédaction",
+        pdf: "pdfs/physio-td1.pdf",
+        date: "Janvier 2024"
+    },
+    {
+        id: "exam-histo-ep",
+        title: "Examen Histologie — Épithéliums",
+        subject: "Histologie",
+        year: "P2",
+        type: "Pratique",
+        pdf: "pdfs/histo-td1.pdf",
+        date: "Octobre 2024"
+    },
+    {
+        id: "exam-cardio-1",
+        title: "Épreuve Cardiologie — Physiologie cardiaque",
+        subject: "Cardiologie",
+        year: "D1",
+        type: "QCM",
+        pdf: "pdfs/cardio-physio.pdf",
+        date: "Septembre 2024"
+    },
+    {
+        id: "exam-chir-1",
+        title: "Examen Chirurgie — Bases opératoires",
+        subject: "Chirurgie",
+        year: "D2",
+        type: "Rédaction",
+        pdf: "pdfs/chirurgie-bases.pdf",
+        date: "Décembre 2024"
+    }
+];
+
+
+// =====================================================
+// TRAVAUX PRATIQUES — Fiches et supports de TP
+// =====================================================
+// Pour ajouter un TP :
+// 1. Placez votre PDF dans le dossier pdfs/
+// 2. Copiez un bloc ci-dessous et modifiez les champs
+//
+// Champs :
+// - id      : identifiant unique
+// - title   : titre du TP
+// - subject : matière
+// - year    : année d'études
+// - type    : type ("TP Pratique", "Compte-rendu", "Protocole", "Rapport")
+// - pdf     : chemin vers le fichier PDF
+// - date    : date de mise à jour (optionnel)
+
+const TRAVAUX_PRATIQUES = [
+    {
+        id: "tp-anat-1",
+        title: "TP 1 Anatomie — Dissection membres inférieurs",
+        subject: "Anatomie",
+        year: "P1",
+        type: "Protocole",
+        pdf: "pdfs/anatomie-tp1.pdf",
+        date: "Février 2024"
+    },
+    {
+        id: "tp-histo-1",
+        title: "TP 1 Histologie — Observation lames épithéliales",
+        subject: "Histologie",
+        year: "P1",
+        type: "TP Pratique",
+        pdf: "pdfs/histo-td1.pdf",
+        date: "Janvier 2024"
+    },
+    {
+        id: "tp-histo-2",
+        title: "TP 2 Histologie — Tissus conjonctifs",
+        subject: "Histologie",
+        year: "P2",
+        type: "Compte-rendu",
+        pdf: "pdfs/histo-td2.pdf",
+        date: "Octobre 2024"
+    },
+    {
+        id: "tp-anat-thorax",
+        title: "TP Anatomie — Région thoracique",
+        subject: "Anatomie",
+        year: "P2",
+        type: "Protocole",
+        pdf: "pdfs/anatomie-thorax.pdf",
+        date: "Novembre 2024"
+    },
+    {
+        id: "tp-physio-1",
+        title: "TP Physiologie — Mesures électrophysiologiques",
+        subject: "Physiologie",
+        year: "P1",
+        type: "Rapport",
+        pdf: "pdfs/physio-td1.pdf",
+        date: "Mars 2024"
+    }
+];

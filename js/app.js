@@ -82,10 +82,18 @@ function showPage(pageId) {
     }
     
     // Actions spécifiques par page
-    if (pageId === 'years') {
-        renderYears();
+    if (pageId === 'years')              renderYears();
+    if (pageId === 'bibliotheque')       renderBibliotheque();
+    if (pageId === 'examens')            renderExamens();
+    if (pageId === 'travaux-pratiques')  renderTP();
+
+    // CTA banner : visible sur toutes les pages sauf le viewer, masqué si connecté
+    const ctaBanner = document.getElementById('cta-banner');
+    if (ctaBanner) {
+        const loggedIn = !!getSession();
+        ctaBanner.style.display = (pageId === 'viewer' || loggedIn) ? 'none' : 'block';
     }
-    
+
     // Scroll en haut
     window.scrollTo(0, 0);
 }
@@ -340,10 +348,268 @@ function viewPdf(courseId) {
 }
 
 function goBackToCourses() {
-    // Nettoyer l'iframe
     document.getElementById('pdf-viewer').src = '';
-    showPage('courses');
+    showPage(lastViewerOrigin);
 }
+
+// Viewer direct (sans contexte année/matière)
+let lastViewerOrigin = 'courses';
+
+function viewPdfDirect(title, pdfPath, origin) {
+    lastViewerOrigin = origin || 'courses';
+    document.getElementById('viewer-title').textContent = title;
+    document.getElementById('viewer-download').href = pdfPath;
+    document.getElementById('fallback-download').href = pdfPath;
+
+    const iframe   = document.getElementById('pdf-viewer');
+    const fallback = document.getElementById('viewer-fallback');
+    iframe.src = pdfPath;
+    iframe.style.display = 'block';
+    fallback.style.display = 'none';
+    iframe.onerror = function() {
+        iframe.style.display = 'none';
+        fallback.style.display = 'flex';
+    };
+    showPage('viewer');
+}
+
+// =====================================================
+// BIBLIOTHÈQUE
+// =====================================================
+
+let libFilter = 'all';
+
+function renderBibliotheque() {
+    const grid     = document.getElementById('books-grid');
+    const noRes    = document.getElementById('lib-no-results');
+    const search   = document.getElementById('lib-search').value.toLowerCase();
+
+    // Générer les boutons de filtre dynamiquement (une seule fois)
+    buildLibFilters();
+
+    let items = BIBLIOTHEQUE;
+    if (libFilter !== 'all') items = items.filter(b => b.category === libFilter);
+    if (search) items = items.filter(b =>
+        b.title.toLowerCase().includes(search) ||
+        b.author.toLowerCase().includes(search) ||
+        b.description.toLowerCase().includes(search)
+    );
+
+    grid.innerHTML = '';
+    if (items.length === 0) { noRes.style.display = 'block'; return; }
+    noRes.style.display = 'none';
+
+    items.forEach((book, i) => {
+        const card = document.createElement('div');
+        card.className = 'book-card';
+        card.style.animationDelay = `${i * 0.04}s`;
+        card.innerHTML = `
+            <div class="book-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+            </div>
+            <div class="book-info">
+                <div class="book-header">
+                    <span class="book-title">${book.title}</span>
+                    <span class="book-badge">${book.category}</span>
+                </div>
+                <p class="book-author">${book.author}${book.date ? ' · ' + book.date : ''}</p>
+                <p class="book-desc">${book.description}</p>
+            </div>
+            <div class="course-actions">
+                <button class="btn-action btn-view" onclick="viewPdfDirect('${book.title.replace(/'/g,"\\'")}', '${book.pdf}', 'bibliotheque')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span>Voir</span>
+                </button>
+                <a class="btn-action btn-dl" href="${book.pdf}" download>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    <span>Télécharger</span>
+                </a>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+let libFiltersBuilt = false;
+function buildLibFilters() {
+    if (libFiltersBuilt) return;
+    const container = document.getElementById('lib-filters');
+    const categories = [...new Set(BIBLIOTHEQUE.map(b => b.category))].sort();
+    categories.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.filter = cat;
+        btn.textContent = cat;
+        btn.onclick = () => setLibFilter(cat);
+        container.appendChild(btn);
+    });
+    libFiltersBuilt = true;
+}
+
+function setLibFilter(f) {
+    libFilter = f;
+    document.querySelectorAll('#lib-filters .filter-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.filter === f)
+    );
+    renderBibliotheque();
+}
+
+function filterBibliotheque() { renderBibliotheque(); }
+
+// =====================================================
+// EXAMENS
+// =====================================================
+
+let examFilter = 'all';
+
+function renderExamens() {
+    const list  = document.getElementById('exam-list');
+    const noRes = document.getElementById('exam-no-results');
+    const search = document.getElementById('exam-search').value.toLowerCase();
+
+    let items = EXAMENS;
+    if (examFilter !== 'all') items = items.filter(e => e.year === examFilter);
+    if (search) items = items.filter(e =>
+        e.title.toLowerCase().includes(search) ||
+        e.subject.toLowerCase().includes(search)
+    );
+
+    list.innerHTML = '';
+    if (items.length === 0) { noRes.style.display = 'block'; return; }
+    noRes.style.display = 'none';
+
+    items.forEach((exam, i) => {
+        const card = document.createElement('div');
+        card.className = 'course-card';
+        card.style.animationDelay = `${i * 0.04}s`;
+        card.innerHTML = `
+            <div class="course-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 11l3 3L22 4"/>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                </svg>
+            </div>
+            <div class="course-info">
+                <div class="course-header">
+                    <span class="course-title">${exam.title}</span>
+                    <span class="course-badge cours">${exam.year}</span>
+                    <span class="course-badge td">${exam.type}</span>
+                </div>
+                <span class="course-date">${exam.subject}${exam.date ? ' · ' + exam.date : ''}</span>
+            </div>
+            <div class="course-actions">
+                <button class="btn-action btn-view" onclick="viewPdfDirect('${exam.title.replace(/'/g,"\\'")}', '${exam.pdf}', 'examens')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span>Voir</span>
+                </button>
+                <a class="btn-action btn-dl" href="${exam.pdf}" download>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    <span>Télécharger</span>
+                </a>
+            </div>
+        `;
+        list.appendChild(card);
+    });
+}
+
+function setExamFilter(f) {
+    examFilter = f;
+    document.querySelectorAll('#page-examens .filter-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.filter === f)
+    );
+    renderExamens();
+}
+
+function filterExamens() { renderExamens(); }
+
+// =====================================================
+// TRAVAUX PRATIQUES
+// =====================================================
+
+let tpFilter = 'all';
+
+function renderTP() {
+    const list  = document.getElementById('tp-list');
+    const noRes = document.getElementById('tp-no-results');
+    const search = document.getElementById('tp-search').value.toLowerCase();
+
+    let items = TRAVAUX_PRATIQUES;
+    if (tpFilter !== 'all') items = items.filter(t => t.year === tpFilter);
+    if (search) items = items.filter(t =>
+        t.title.toLowerCase().includes(search) ||
+        t.subject.toLowerCase().includes(search)
+    );
+
+    list.innerHTML = '';
+    if (items.length === 0) { noRes.style.display = 'block'; return; }
+    noRes.style.display = 'none';
+
+    items.forEach((tp, i) => {
+        const card = document.createElement('div');
+        card.className = 'course-card';
+        card.style.animationDelay = `${i * 0.04}s`;
+        card.innerHTML = `
+            <div class="course-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                </svg>
+            </div>
+            <div class="course-info">
+                <div class="course-header">
+                    <span class="course-title">${tp.title}</span>
+                    <span class="course-badge cours">${tp.year}</span>
+                    <span class="course-badge tp">${tp.type}</span>
+                </div>
+                <span class="course-date">${tp.subject}${tp.date ? ' · ' + tp.date : ''}</span>
+            </div>
+            <div class="course-actions">
+                <button class="btn-action btn-view" onclick="viewPdfDirect('${tp.title.replace(/'/g,"\\'")}', '${tp.pdf}', 'travaux-pratiques')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span>Voir</span>
+                </button>
+                <a class="btn-action btn-dl" href="${tp.pdf}" download>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    <span>Télécharger</span>
+                </a>
+            </div>
+        `;
+        list.appendChild(card);
+    });
+}
+
+function setTPFilter(f) {
+    tpFilter = f;
+    document.querySelectorAll('#page-travaux-pratiques .filter-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.filter === f)
+    );
+    renderTP();
+}
+
+function filterTP() { renderTP(); }
 
 // =====================================================
 // INITIALISATION
@@ -559,6 +825,14 @@ function updateNavbar() {
     } else {
         navAuth.style.display = 'flex';
         navUser.style.display = 'none';
+    }
+
+    // CTA banner
+    const ctaBanner = document.getElementById('cta-banner');
+    if (ctaBanner) {
+        const activePage = document.querySelector('.page.active');
+        const isViewer = activePage && activePage.id === 'page-viewer';
+        ctaBanner.style.display = (session || isViewer) ? 'none' : 'block';
     }
 }
 
