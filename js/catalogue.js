@@ -57,25 +57,24 @@ const CATALOGUE = {
     
     subjects: {
         "p1": [
-            { id: "anatomie", name: "Anatomie", icon: "anatomy" },
-            { id: "physiologie", name: "Physiologie", icon: "physio" },
-            { id: "histologie", name: "Histologie", icon: "histo" },
-            { id: "biochimie", name: "Biochimie", icon: "bio" }
+            { id: "anatomie",  name: "Anatomie",                         icon: "anatomy" },
+            { id: "histologie", name: "Histologie",                       icon: "histo"   },
+            { id: "genetique",  name: "Génétique & Biologie Moléculaire", icon: "bio"     }
         ],
         "p2": [
-            { id: "anatomie", name: "Anatomie", icon: "anatomy" },
-            { id: "histologie", name: "Histologie", icon: "histo" },
-            { id: "pharmacologie", name: "Pharmacologie", icon: "pharma" },
-            { id: "microbiologie", name: "Microbiologie", icon: "micro" }
-        ],
-        "d1": [
-            { id: "cardiologie", name: "Cardiologie", icon: "cardio" },
-            { id: "neurologie", name: "Neurologie", icon: "neuro" },
+            { id: "anatomie",     name: "Anatomie",      icon: "anatomy" },
+            { id: "histologie",   name: "Histologie",    icon: "histo"   },
             { id: "pharmacologie", name: "Pharmacologie", icon: "pharma" }
         ],
+        "d1": [
+            { id: "neurologie",   name: "Neurologie",   icon: "neuro"    },
+            { id: "pharmacologie", name: "Pharmacologie", icon: "pharma" },
+            { id: "techniques",   name: "Techniques",   icon: "general"  },
+            { id: "semiologie",   name: "Sémiologie",   icon: "cardio"   }
+        ],
         "d2": [
-            { id: "medecine-interne", name: "Médecine interne", icon: "general" },
-            { id: "chirurgie", name: "Chirurgie", icon: "anatomy" }
+            { id: "medecine-interne", name: "Médecine Interne", icon: "general" },
+            { id: "chirurgie",        name: "Chirurgie",         icon: "anatomy" }
         ]
     },
 
@@ -92,171 +91,84 @@ const CATALOGUE = {
     // - date: date de mise à jour (optionnel)
     
     courses: {
+
+        // ----- P1 -----
         "p1-anatomie": [
-            {
-                id: "anat-intro",
-                title: "Introduction à l'anatomie",
-                type: "Cours",
-                pdf: "pdfs/anatomie-intro.pdf",
-                date: "15 Jan 2024"
-            },
-            {
-                id: "anat-td1",
-                title: "TD 1 — Les tissus",
-                type: "TD",
-                pdf: "pdfs/anatomie-td1.pdf",
-                date: "22 Jan 2024"
-            },
-            {
-                id: "anat-tp1",
-                title: "TP 1 — Dissection",
-                type: "TP",
-                pdf: "pdfs/anatomie-tp1.pdf",
-                date: "25 Jan 2024"
-            },
-            {
-                id: "anat-annales",
-                title: "Annales 2023",
-                type: "Annales",
-                pdf: "pdfs/anatomie-annales-2023.pdf",
-                date: "Juin 2023"
-            }
+            { id: "p1-anat-1", title: "L'Ovaire",                       type: "Cours", pdf: "pdfs/L'OVAIRE.pdf" },
+            { id: "p1-anat-2", title: "L'Utérus",                        type: "Cours", pdf: "pdfs/L'UTERUS.pdf" },
+            { id: "p1-anat-3", title: "Topographie Générale du Thorax",   type: "Cours", pdf: "pdfs/TOPOGRAHIE GENERALE DU THORAX.pdf" },
+            { id: "p1-anat-4", title: "Topographie de l'Abdomen",         type: "Cours", pdf: "pdfs/topographie de l abdomen.pdf" },
+            { id: "p1-anat-5", title: "Trachée, Bronches et Poumons",     type: "Cours", pdf: "pdfs/TRACHEE - BRONCHES - POUMONS.pdf" },
+            { id: "p1-anat-6", title: "Appareil Génital Féminin",         type: "Cours", pdf: "pdfs/Appareil génital féminin cours pwp -om.pdf" }
         ],
-        "p1-physiologie": [
-            {
-                id: "physio-1",
-                title: "Physiologie — Chapitre 1",
-                type: "Cours",
-                pdf: "pdfs/physio-1.pdf",
-                date: "10 Jan 2024"
-            },
-            {
-                id: "physio-2",
-                title: "Physiologie — Chapitre 2",
-                type: "Cours",
-                pdf: "pdfs/physio-2.pdf",
-                date: "17 Jan 2024"
-            },
-            {
-                id: "physio-td1",
-                title: "TD 1 — Électrophysiologie",
-                type: "TD",
-                pdf: "pdfs/physio-td1.pdf",
-                date: "20 Jan 2024"
-            }
-        ],
+
         "p1-histologie": [
-            {
-                id: "histo-intro",
-                title: "Introduction à l'histologie",
-                type: "Cours",
-                pdf: "pdfs/histo-intro.pdf",
-                date: "12 Jan 2024"
-            }
+            { id: "p1-histo-1", title: "Endosomes et Lysosomes", type: "Cours", pdf: "pdfs/Endosome Lysosomes cours Etudiants.pdf" }
         ],
-        "p1-biochimie": [
-            {
-                id: "biochim-1",
-                title: "Les glucides",
-                type: "Cours",
-                pdf: "pdfs/biochimie-glucides.pdf",
-                date: "8 Jan 2024"
-            },
-            {
-                id: "biochim-2",
-                title: "Les lipides",
-                type: "Cours",
-                pdf: "pdfs/biochimie-lipides.pdf",
-                date: "15 Jan 2024"
-            }
+
+        "p1-genetique": [
+            { id: "p1-gen-1", title: "Éléments de Génétique Moléculaire",         type: "Cours", pdf: "pdfs/ELEMENTS  DE GENETIQUE (BIOLOGIE) MOLECULAIRE - Copie.pdf" },
+            { id: "p1-gen-2", title: "Suite — Éléments de Génétique Moléculaire", type: "Cours", pdf: "pdfs/SUITE-ELEMENTS DE GENETIQUE MOLECULAIRE.pdf" },
+            { id: "p1-gen-3", title: "Les Acides Nucléiques",                      type: "Cours", pdf: "pdfs/acides nucléiques étudiant.pdf" },
+            { id: "p1-gen-4", title: "Traduction",                                 type: "Cours", pdf: "pdfs/traduc 2 - Copie.pdf" },
+            { id: "p1-gen-5", title: "Transcription",                              type: "Cours", pdf: "pdfs/trans 2 - Copie.pdf" },
+            { id: "p1-gen-6", title: "Explorations Cytogénétiques",                type: "Cours", pdf: "pdfs/Expllorations cytogénétiques (2).pdf" },
+            { id: "p1-gen-7", title: "Malformations Congénitales",                 type: "Cours", pdf: "pdfs/MALFORMATIONS CONGENITALESPrésentation1.pdf" },
+            { id: "p1-gen-8", title: "Embryologie de l'Appareil Génital",          type: "Cours", pdf: "pdfs/EMBRYOLOGIE DE L'APPAREIL GENITAl( MASCULIN  ET FEMININ) - première partie-Copie.pdf" }
         ],
+
+        // ----- P2 -----
         "p2-anatomie": [
-            {
-                id: "anat-thorax",
-                title: "Anatomie du thorax",
-                type: "Cours",
-                pdf: "pdfs/anatomie-thorax.pdf",
-                date: "5 Sep 2024"
-            }
+            { id: "p2-anat-1", title: "Le Foie",        type: "Cours", pdf: "pdfs/Foie.pdf" },
+            { id: "p2-anat-2", title: "Les Surrénales",  type: "Cours", pdf: "pdfs/SURRENALES L2 last.pdf" }
         ],
+
         "p2-histologie": [
-            {
-                id: "histo-td1",
-                title: "TD 1 — Épithélium",
-                type: "TD",
-                pdf: "pdfs/histo-td1.pdf",
-                date: "10 Sep 2024"
-            },
-            {
-                id: "histo-td2",
-                title: "TD 2 — Tissus conjonctifs",
-                type: "TD",
-                pdf: "pdfs/histo-td2.pdf",
-                date: "17 Sep 2024"
-            }
+            { id: "p2-histo-1", title: "Histologie de l'Appareil Respiratoire", type: "Cours", pdf: "pdfs/cours Ndiaga histologie appareil respiratoire .pdf" },
+            { id: "p2-histo-2", title: "Histologie de l'Appareil Génital Mâle", type: "Cours", pdf: "pdfs/Appareil Génital mâle Histo..pdf" }
         ],
+
         "p2-pharmacologie": [
-            {
-                id: "pharma-intro",
-                title: "Introduction à la pharmacologie",
-                type: "Cours",
-                pdf: "pdfs/pharma-intro.pdf",
-                date: "3 Sep 2024"
-            }
+            { id: "p2-pharma-1", title: "Les Stéroïdes", type: "Cours", pdf: "pdfs/FMPO-L2S1-STEROIDES-STD (1).pdf" }
         ],
-        "p2-microbiologie": [
-            {
-                id: "micro-bact",
-                title: "Bactériologie générale",
-                type: "Cours",
-                pdf: "pdfs/micro-bacterio.pdf",
-                date: "6 Sep 2024"
-            }
-        ],
-        "d1-cardiologie": [
-            {
-                id: "cardio-1",
-                title: "Physiologie cardiaque",
-                type: "Cours",
-                pdf: "pdfs/cardio-physio.pdf",
-                date: "2 Sep 2024"
-            }
-        ],
+
+        // ----- D1 -----
         "d1-neurologie": [
-            {
-                id: "neuro-1",
-                title: "Neuroanatomie",
-                type: "Cours",
-                pdf: "pdfs/neuro-anatomie.pdf",
-                date: "4 Sep 2024"
-            }
+            { id: "d1-neuro-1", title: "Motilité Volontaire",     type: "Cours", pdf: "pdfs/Motilité volontaire.pdf" },
+            { id: "d1-neuro-2", title: "Présentation Neurologie", type: "Cours", pdf: "pdfs/Présentation1.pdf" }
         ],
+
         "d1-pharmacologie": [
-            {
-                id: "pharma-avance",
-                title: "Pharmacologie avancée",
-                type: "Cours",
-                pdf: "pdfs/pharma-avance.pdf",
-                date: "8 Sep 2024"
-            }
+            { id: "d1-pharma-1", title: "Métabolisme des Médicaments",         type: "Cours", pdf: "pdfs/METABOLISME_MDCTS.pdf" },
+            { id: "d1-pharma-2", title: "Éléments de Pharmacocinétique",        type: "Cours", pdf: "pdfs/ELEMENTS_PK.pdf" },
+            { id: "d1-pharma-3", title: "Mécanismes d'Action des Médicaments",  type: "Cours", pdf: "pdfs/MECANISME D'ACTION DES MEDICAMENTS 070217 DER.pdf" }
         ],
+
+        "d1-techniques": [
+            { id: "d1-tech-1", title: "Les Techniques", type: "Cours", pdf: "pdfs/Les Techniques D1 PWER.pdf" }
+        ],
+
+        "d1-semiologie": [
+            { id: "d1-semio-1", title: "Séméiologie des Splénomégalies", type: "Cours", pdf: "pdfs/séméiologie des SPLENOMEGALIES.pdf" },
+            { id: "d1-semio-2", title: "Sémiologie de l'Anémie",          type: "Cours", pdf: "pdfs/sémio anémie  2017.pdf", date: "2017" }
+        ],
+
+        // ----- D2 -----
         "d2-medecine-interne": [
-            {
-                id: "med-int-1",
-                title: "Sémiologie générale",
-                type: "Cours",
-                pdf: "pdfs/med-int-semio.pdf",
-                date: "1 Sep 2024"
-            }
+            { id: "d2-med-1", title: "CAT devant une Hémorragie Digestive",    type: "Cours", pdf: "pdfs/Conduite à tenir devant une hémorragie digestve.pdf" },
+            { id: "d2-med-2", title: "Abcès du Poumon",                         type: "Cours", pdf: "pdfs/ABCES DU POUMON.pdf" },
+            { id: "d2-med-3", title: "Bronchopneumopathies Aiguës Virales",     type: "Cours", pdf: "pdfs/Bronchopneumopathies aiguës virales.pdf" },
+            { id: "d2-med-4", title: "Cancer de l'Œsophage",                   type: "Cours", pdf: "pdfs/Cancer de l'oesophage 2016-2017.pdf", date: "2016-2017" },
+            { id: "d2-med-5", title: "L'Asthme",                                type: "Cours", pdf: "pdfs/asthme DII 2016 n°2.pdf", date: "2016" },
+            { id: "d2-med-6", title: "Artériopathie Oblitérante — Ischémie Critique", type: "Cours", pdf: "pdfs/ACOMI  ISCH CRITIQUE.pdf" },
+            { id: "d2-med-7", title: "Cardiopathies Congénitales Cyanogènes",   type: "Cours", pdf: "pdfs/Cardiopathies congénitales cyanogénes Dakar Janv 2017.pdf", date: "Jan 2017" },
+            { id: "d2-med-8", title: "Pityriasis Versicolor",                   type: "Cours", pdf: "pdfs/PITYRIASIS VERSICOLOR.pdf" }
         ],
+
         "d2-chirurgie": [
-            {
-                id: "chir-1",
-                title: "Bases de la chirurgie",
-                type: "Cours",
-                pdf: "pdfs/chirurgie-bases.pdf",
-                date: "5 Sep 2024"
-            }
+            { id: "d2-chir-1", title: "Appendicite Aiguë",         type: "Cours", pdf: "pdfs/Appendicite aiguë - Copie.pdf" },
+            { id: "d2-chir-2", title: "Contusions Abdominales",     type: "Cours", pdf: "pdfs/contusions abdominales.pdf" },
+            { id: "d2-chir-3", title: "Atrésie de l'Œsophage",     type: "Cours", pdf: "pdfs/ATRESIE DE L'OESOPHAGE.pdf" }
         ]
     }
 };
@@ -286,62 +198,7 @@ if (typeof module !== 'undefined' && module.exports) {
 // - pdf      : chemin vers le fichier PDF (depuis la racine du site)
 // - date     : année ou date de publication (optionnel)
 
-const BIBLIOTHEQUE = [
-    {
-        id: "lib-anat-1",
-        title: "Introduction à l'Anatomie Humaine",
-        author: "Département d'Anatomie",
-        description: "Bases fondamentales de l'anatomie humaine, structures et repères osseux.",
-        category: "Anatomie",
-        pdf: "pdfs/anatomie-intro.pdf",
-        date: "2024"
-    },
-    {
-        id: "lib-physio-1",
-        title: "Physiologie Fondamentale",
-        author: "Équipe pédagogique",
-        description: "Fonctionnement des grands systèmes physiologiques de l'organisme.",
-        category: "Physiologie",
-        pdf: "pdfs/physio-1.pdf",
-        date: "2024"
-    },
-    {
-        id: "lib-biochim-1",
-        title: "Biochimie des Glucides et Lipides",
-        author: "Département de Biochimie",
-        description: "Métabolisme des glucides et des lipides, voies métaboliques essentielles.",
-        category: "Biochimie",
-        pdf: "pdfs/biochimie-glucides.pdf",
-        date: "2024"
-    },
-    {
-        id: "lib-pharma-1",
-        title: "Manuel de Pharmacologie",
-        author: "Équipe de Pharmacologie",
-        description: "Principes généraux de pharmacologie, classes thérapeutiques principales.",
-        category: "Pharmacologie",
-        pdf: "pdfs/pharma-intro.pdf",
-        date: "2024"
-    },
-    {
-        id: "lib-micro-1",
-        title: "Microbiologie & Bactériologie",
-        author: "Département de Microbiologie",
-        description: "Classification bactérienne, mécanismes d'infection et antibiothérapie.",
-        category: "Microbiologie",
-        pdf: "pdfs/micro-bacterio.pdf",
-        date: "2024"
-    },
-    {
-        id: "lib-neuro-1",
-        title: "Neuroanatomie Clinique",
-        author: "Département de Neurologie",
-        description: "Organisation du système nerveux central et périphérique, voies nerveuses.",
-        category: "Neurologie",
-        pdf: "pdfs/neuro-anatomie.pdf",
-        date: "2024"
-    }
-];
+const BIBLIOTHEQUE = [];
 
 
 // =====================================================
@@ -360,53 +217,7 @@ const BIBLIOTHEQUE = [
 // - pdf     : chemin vers le fichier PDF
 // - date    : date de l'examen (ex: "Juin 2023")
 
-const EXAMENS = [
-    {
-        id: "exam-anat-2023",
-        title: "Examen Anatomie — Session Juin 2023",
-        subject: "Anatomie",
-        year: "P1",
-        type: "QCM",
-        pdf: "pdfs/anatomie-annales-2023.pdf",
-        date: "Juin 2023"
-    },
-    {
-        id: "exam-physio-td",
-        title: "Épreuve Physiologie — Électrophysiologie",
-        subject: "Physiologie",
-        year: "P1",
-        type: "Rédaction",
-        pdf: "pdfs/physio-td1.pdf",
-        date: "Janvier 2024"
-    },
-    {
-        id: "exam-histo-ep",
-        title: "Examen Histologie — Épithéliums",
-        subject: "Histologie",
-        year: "P2",
-        type: "Pratique",
-        pdf: "pdfs/histo-td1.pdf",
-        date: "Octobre 2024"
-    },
-    {
-        id: "exam-cardio-1",
-        title: "Épreuve Cardiologie — Physiologie cardiaque",
-        subject: "Cardiologie",
-        year: "D1",
-        type: "QCM",
-        pdf: "pdfs/cardio-physio.pdf",
-        date: "Septembre 2024"
-    },
-    {
-        id: "exam-chir-1",
-        title: "Examen Chirurgie — Bases opératoires",
-        subject: "Chirurgie",
-        year: "D2",
-        type: "Rédaction",
-        pdf: "pdfs/chirurgie-bases.pdf",
-        date: "Décembre 2024"
-    }
-];
+const EXAMENS = [];
 
 
 // =====================================================
@@ -425,50 +236,4 @@ const EXAMENS = [
 // - pdf     : chemin vers le fichier PDF
 // - date    : date de mise à jour (optionnel)
 
-const TRAVAUX_PRATIQUES = [
-    {
-        id: "tp-anat-1",
-        title: "TP 1 Anatomie — Dissection membres inférieurs",
-        subject: "Anatomie",
-        year: "P1",
-        type: "Protocole",
-        pdf: "pdfs/anatomie-tp1.pdf",
-        date: "Février 2024"
-    },
-    {
-        id: "tp-histo-1",
-        title: "TP 1 Histologie — Observation lames épithéliales",
-        subject: "Histologie",
-        year: "P1",
-        type: "TP Pratique",
-        pdf: "pdfs/histo-td1.pdf",
-        date: "Janvier 2024"
-    },
-    {
-        id: "tp-histo-2",
-        title: "TP 2 Histologie — Tissus conjonctifs",
-        subject: "Histologie",
-        year: "P2",
-        type: "Compte-rendu",
-        pdf: "pdfs/histo-td2.pdf",
-        date: "Octobre 2024"
-    },
-    {
-        id: "tp-anat-thorax",
-        title: "TP Anatomie — Région thoracique",
-        subject: "Anatomie",
-        year: "P2",
-        type: "Protocole",
-        pdf: "pdfs/anatomie-thorax.pdf",
-        date: "Novembre 2024"
-    },
-    {
-        id: "tp-physio-1",
-        title: "TP Physiologie — Mesures électrophysiologiques",
-        subject: "Physiologie",
-        year: "P1",
-        type: "Rapport",
-        pdf: "pdfs/physio-td1.pdf",
-        date: "Mars 2024"
-    }
-];
+const TRAVAUX_PRATIQUES = [];

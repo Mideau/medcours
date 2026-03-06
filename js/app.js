@@ -259,9 +259,10 @@ function renderCourses() {
         const card = document.createElement('div');
         card.className = 'course-card';
         card.style.animationDelay = `${index * 0.03}s`;
-        
+
         const badgeClass = course.type.toLowerCase();
-        
+        const encodedHref = encodePdfPath(course.pdf);
+
         card.innerHTML = `
             <div class="course-icon">${ICONS.pdf}</div>
             <div class="course-info">
@@ -279,7 +280,7 @@ function renderCourses() {
                     </svg>
                     <span>Voir</span>
                 </button>
-                <a class="btn-action btn-dl" href="${course.pdf}" download>
+                <a class="btn-action btn-dl" href="${encodedHref}" download>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                         <polyline points="7 10 12 15 17 10"/>
@@ -289,7 +290,7 @@ function renderCourses() {
                 </a>
             </div>
         `;
-        
+
         list.appendChild(card);
     });
 }
@@ -327,14 +328,14 @@ function viewPdf(courseId) {
     
     // Mettre à jour le viewer
     document.getElementById('viewer-title').textContent = course.title;
-    document.getElementById('viewer-download').href = course.pdf;
-    document.getElementById('fallback-download').href = course.pdf;
+    document.getElementById('viewer-download').href = encodePdfPath(course.pdf);
+    document.getElementById('fallback-download').href = encodePdfPath(course.pdf);
     
     const iframe = document.getElementById('pdf-viewer');
     const fallback = document.getElementById('viewer-fallback');
     
     // Essayer d'afficher le PDF
-    iframe.src = course.pdf;
+    iframe.src = encodePdfPath(course.pdf);
     iframe.style.display = 'block';
     fallback.style.display = 'none';
     
@@ -352,18 +353,23 @@ function goBackToCourses() {
     showPage(lastViewerOrigin);
 }
 
+// Encode a relative PDF path so spaces/accents work in iframe.src
+function encodePdfPath(path) {
+    return path.split('/').map(segment => encodeURIComponent(segment)).join('/');
+}
+
 // Viewer direct (sans contexte année/matière)
 let lastViewerOrigin = 'courses';
 
 function viewPdfDirect(title, pdfPath, origin) {
     lastViewerOrigin = origin || 'courses';
     document.getElementById('viewer-title').textContent = title;
-    document.getElementById('viewer-download').href = pdfPath;
-    document.getElementById('fallback-download').href = pdfPath;
+    document.getElementById('viewer-download').href = encodePdfPath(pdfPath);
+    document.getElementById('fallback-download').href = encodePdfPath(pdfPath);
 
     const iframe   = document.getElementById('pdf-viewer');
     const fallback = document.getElementById('viewer-fallback');
-    iframe.src = pdfPath;
+    iframe.src = encodePdfPath(pdfPath);
     iframe.style.display = 'block';
     fallback.style.display = 'none';
     iframe.onerror = function() {
