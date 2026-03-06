@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedCours — Bibliothèque de cours de médecine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo" onclick="showPage('home')">
+                <svg class="logo-icon" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="currentColor"/>
+                    <path d="M16 6L16 26M10 16L22 16M10 10L10 22M22 10L22 22" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+                <span>MedCours</span>
+            </a>
+            <nav class="nav">
+                <a href="#" class="nav-link" onclick="showPage('home')">Accueil</a>
+                <a href="#" class="nav-link" onclick="showPage('years')">Cours</a>
+                <button class="btn-disabled" disabled title="Prototype — Fonctionnalité à venir">
+                    Connexion
+                </button>
+            </nav>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#" onclick="showPage('home'); toggleMobileMenu()">Accueil</a>
+            <a href="#" onclick="showPage('years'); toggleMobileMenu()">Cours</a>
+            <button class="btn-disabled" disabled>Connexion (Prototype)</button>
+        </div>
+    </header>
+
+    <!-- Page: Home -->
+    <main class="page page-home active" id="page-home">
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Accédez à vos cours de médecine,<br>
+                    <span class="highlight">classés et disponibles en PDF.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Choisissez une année, une matière, puis ouvrez ou téléchargez le PDF.<br>
+                    Simple. Rapide. Efficace.
+                </p>
+                <button class="btn-primary btn-large" onclick="showPage('years')">
+                    <span>Accéder aux cours</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <section class="how-it-works">
+            <h2 class="section-title">Comment ça marche</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                    </div>
+                    <h3>Choisissez une année</h3>
+                    <p>P1, P2, D1, D2...</p>
+                </div>
+                <div class="step-arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                    </div>
+                    <h3>Sélectionnez une matière</h3>
+                    <p>Anatomie, Physiologie...</p>
+                </div>
+                <div class="step-arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="12" y1="18" x2="12" y2="12"/>
+                            <line x1="9" y1="15" x2="15" y2="15"/>
+                        </svg>
+                    </div>
+                    <h3>Ouvrez le PDF</h3>
+                    <p>Voir ou télécharger</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Page: Years -->
+    <main class="page page-years" id="page-years">
+        <div class="page-container">
+            <div class="breadcrumb">
+                <a href="#" onclick="showPage('home')">Accueil</a>
+                <span>/</span>
+                <span>Années</span>
+            </div>
+            <h1 class="page-title">Choisir une année</h1>
+            <p class="page-subtitle">Sélectionnez votre année d'études pour accéder aux matières disponibles.</p>
+            <div class="cards-grid" id="years-grid">
+                <!-- Generated by JS -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Page: Subjects -->
+    <main class="page page-subjects" id="page-subjects">
+        <div class="page-container">
+            <div class="breadcrumb">
+                <a href="#" onclick="showPage('home')">Accueil</a>
+                <span>/</span>
+                <a href="#" onclick="showPage('years')">Années</a>
+                <span>/</span>
+                <span id="breadcrumb-year">P1</span>
+            </div>
+            <h1 class="page-title">Choisir une matière</h1>
+            <p class="page-subtitle" id="subjects-subtitle">Matières disponibles pour l'année P1</p>
+            <div class="cards-grid" id="subjects-grid">
+                <!-- Generated by JS -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Page: Courses -->
+    <main class="page page-courses" id="page-courses">
+        <div class="page-container">
+            <div class="breadcrumb">
+                <a href="#" onclick="showPage('home')">Accueil</a>
+                <span>/</span>
+                <a href="#" onclick="showPage('years')">Années</a>
+                <span>/</span>
+                <a href="#" onclick="goBackToSubjects()" id="breadcrumb-year-link">P1</a>
+                <span>/</span>
+                <span id="breadcrumb-subject">Anatomie</span>
+            </div>
+            <div class="courses-header">
+                <div>
+                    <h1 class="page-title" id="courses-title">Anatomie — P1</h1>
+                    <p class="page-subtitle" id="courses-count">3 documents disponibles</p>
+                </div>
+            </div>
+            
+            <!-- Search and Filters -->
+            <div class="search-filters">
+                <div class="search-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" id="search-input" placeholder="Rechercher un cours..." oninput="filterCourses()">
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">Tous</button>
+                    <button class="filter-btn" data-filter="Cours" onclick="setFilter('Cours')">Cours</button>
+                    <button class="filter-btn" data-filter="TD" onclick="setFilter('TD')">TD</button>
+                    <button class="filter-btn" data-filter="TP" onclick="setFilter('TP')">TP</button>
+                    <button class="filter-btn" data-filter="Annales" onclick="setFilter('Annales')">Annales</button>
+                </div>
+            </div>
+
+            <div class="courses-list" id="courses-list">
+                <!-- Generated by JS -->
+            </div>
+            
+            <div class="no-results" id="no-results" style="display: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    <line x1="8" y1="8" x2="14" y2="14"/>
+                    <line x1="14" y1="8" x2="8" y2="14"/>
+                </svg>
+                <p>Aucun cours trouvé</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Page: PDF Viewer -->
+    <main class="page page-viewer" id="page-viewer">
+        <div class="viewer-header">
+            <button class="btn-back" onclick="goBackToCourses()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                <span>Retour</span>
+            </button>
+            <h2 class="viewer-title" id="viewer-title">Nom du cours</h2>
+            <a href="#" class="btn-download" id="viewer-download" download>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>Télécharger</span>
+            </a>
+        </div>
+        <div class="viewer-container">
+            <iframe id="pdf-viewer" src="" frameborder="0"></iframe>
+            <div class="viewer-fallback" id="viewer-fallback" style="display: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                </svg>
+                <h3>Aperçu non disponible</h3>
+                <p>Le PDF ne peut pas être affiché directement.<br>Veuillez le télécharger pour le consulter.</p>
+                <a href="#" class="btn-primary" id="fallback-download" download>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    <span>Télécharger le PDF</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <svg class="logo-icon" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="currentColor"/>
+                    <path d="M16 6L16 26M10 16L22 16M10 10L10 22M22 10L22 22" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+                <span>MedCours</span>
+            </div>
+            <p class="footer-text">Bibliothèque de cours de médecine en PDF</p>
+            <div class="footer-links">
+                <button class="btn-disabled-small" disabled title="Prototype">Créer un compte</button>
+                <button class="btn-disabled-small" disabled title="Prototype">Contact</button>
+            </div>
+            <p class="footer-copyright">© 2024 MedCours — Prototype MVP</p>
+        </div>
+    </footer>
+
+    <script src="js/catalogue.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
