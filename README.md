@@ -1,6 +1,6 @@
-# MedCours — Bibliothèque de cours de médecine en PDF
+# Faczone — Bibliothèque de cours de médecine en PDF
 
-![MedCours](https://img.shields.io/badge/MedCours-MVP-blue)
+![Faczone](https://img.shields.io/badge/Faczone-MVP-blue)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
@@ -160,7 +160,7 @@ Les couleurs principales sont définies dans `css/style.css` :
 
 ### Logo
 
-Le logo "MedCours" est un SVG intégré dans `index.html`. Recherchez `<svg class="logo-icon"` pour le modifier.
+Le logo "Faczone" est un SVG intégré dans `index.html`. Recherchez `<svg class="logo-icon"` pour le modifier.
 
 ---
 
@@ -214,4 +214,4 @@ Projet prototype — Usage éducatif et démonstration.
 
 ---
 
-**MedCours** — *Vos cours de médecine, simplement.*
+**Faczone** — *Vos cours de médecine, simplement.*

@@ -1,6 +1,6 @@
 /**
  * =====================================================
- * CATALOGUE DES COURS - MedCours
+ * CATALOGUE DES COURS - Faczone
  * =====================================================
  * 
  * Ce fichier contient toutes les données du site.

@@ -1,6 +1,6 @@
 /**
  * =====================================================
- * MedCours - Application JavaScript
+ * Faczone - Application JavaScript
  * =====================================================
  */
 
@@ -377,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
 if (window.location.protocol === 'file:') {
     console.info(`
 ╔══════════════════════════════════════════════════════════════╗
-║                         MedCours                             ║
+║                          Faczone                             ║
 ║                                                              ║
 ║  ⚠️  Vous ouvrez ce fichier en mode local (file://)          ║
 ║                                                              ║
