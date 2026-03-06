@@ -352,17 +352,26 @@ function goBackToCourses() {
 document.addEventListener('DOMContentLoaded', function() {
     // Afficher la page d'accueil par défaut
     showPage('home');
-    
-    // Fermer le menu mobile quand on clique ailleurs
+
+    // Restaurer la session
+    updateNavbar();
+
+    // Fermer le menu mobile + dropdown quand on clique ailleurs
     document.addEventListener('click', function(e) {
         const menu = document.getElementById('mobileMenu');
         const btn = document.querySelector('.mobile-menu-btn');
-        
+
         if (!menu.contains(e.target) && !btn.contains(e.target)) {
             menu.classList.remove('active');
         }
+
+        const navUser   = document.getElementById('nav-user');
+        const dropdown  = document.getElementById('user-dropdown');
+        if (navUser && !navUser.contains(e.target)) {
+            dropdown.classList.remove('open');
+        }
     });
-    
+
     // Gestion du clavier pour la recherche
     document.getElementById('search-input').addEventListener('keyup', function(e) {
         if (e.key === 'Escape') {
@@ -370,7 +379,216 @@ document.addEventListener('DOMContentLoaded', function() {
             filterCourses();
         }
     });
+
+    // Fermer le modal avec Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.getElementById('auth-modal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    });
 });
+
+// =====================================================
+// AUTHENTIFICATION
+// =====================================================
+
+const STORAGE_USERS   = 'faczone_users';
+const STORAGE_SESSION = 'faczone_session';
+
+function getUsers() {
+    return JSON.parse(localStorage.getItem(STORAGE_USERS) || '[]');
+}
+
+function saveUsers(users) {
+    localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+}
+
+function getSession() {
+    return JSON.parse(localStorage.getItem(STORAGE_SESSION) || 'null');
+}
+
+function saveSession(user) {
+    localStorage.setItem(STORAGE_SESSION, JSON.stringify(user));
+}
+
+function clearSession() {
+    localStorage.removeItem(STORAGE_SESSION);
+}
+
+function hashPassword(pw) {
+    // Simple deterministic hash for demo (not cryptographic)
+    return btoa(encodeURIComponent(pw + '_faczone'));
+}
+
+function getInitials(name) {
+    return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
+// --- Modal control ---
+
+function openAuthModal(tab) {
+    switchTab(tab || 'login');
+    document.getElementById('auth-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // Close user dropdown if open
+    document.getElementById('user-dropdown').classList.remove('open');
+}
+
+function closeAuthModal(event) {
+    if (event && event.target !== document.getElementById('auth-modal')) return;
+    document.getElementById('auth-modal').classList.remove('open');
+    document.body.style.overflow = '';
+    clearAuthForms();
+}
+
+function clearAuthForms() {
+    ['login-email','login-password','reg-name','reg-email','reg-password','reg-confirm'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.value = ''; el.classList.remove('error'); }
+    });
+    document.getElementById('login-error').textContent = '';
+    document.getElementById('register-error').textContent = '';
+}
+
+function switchTab(tab) {
+    const isLogin = tab === 'login';
+    document.getElementById('tab-login').classList.toggle('active', isLogin);
+    document.getElementById('tab-register').classList.toggle('active', !isLogin);
+    document.getElementById('form-login').classList.toggle('hidden', !isLogin);
+    document.getElementById('form-register').classList.toggle('hidden', isLogin);
+}
+
+// --- Handlers ---
+
+function handleLogin(e) {
+    e.preventDefault();
+    const email    = document.getElementById('login-email').value.trim().toLowerCase();
+    const password = document.getElementById('login-password').value;
+    const errorEl  = document.getElementById('login-error');
+
+    errorEl.textContent = '';
+    const users = getUsers();
+    const user  = users.find(u => u.email === email && u.password === hashPassword(password));
+
+    if (!user) {
+        errorEl.textContent = 'E-mail ou mot de passe incorrect.';
+        document.getElementById('login-email').classList.add('error');
+        document.getElementById('login-password').classList.add('error');
+        return;
+    }
+
+    saveSession({ name: user.name, email: user.email });
+    updateNavbar();
+    document.getElementById('auth-modal').classList.remove('open');
+    document.body.style.overflow = '';
+    clearAuthForms();
+    showToast(`Bienvenue, ${user.name.split(' ')[0]} !`, 'success');
+}
+
+function handleRegister(e) {
+    e.preventDefault();
+    const name     = document.getElementById('reg-name').value.trim();
+    const email    = document.getElementById('reg-email').value.trim().toLowerCase();
+    const password = document.getElementById('reg-password').value;
+    const confirm  = document.getElementById('reg-confirm').value;
+    const errorEl  = document.getElementById('register-error');
+
+    errorEl.textContent = '';
+    ['reg-name','reg-email','reg-password','reg-confirm'].forEach(id => {
+        document.getElementById(id).classList.remove('error');
+    });
+
+    if (name.length < 2) {
+        errorEl.textContent = 'Veuillez entrer votre prénom et nom.';
+        document.getElementById('reg-name').classList.add('error');
+        return;
+    }
+    if (password.length < 6) {
+        errorEl.textContent = 'Le mot de passe doit contenir au moins 6 caractères.';
+        document.getElementById('reg-password').classList.add('error');
+        return;
+    }
+    if (password !== confirm) {
+        errorEl.textContent = 'Les mots de passe ne correspondent pas.';
+        document.getElementById('reg-confirm').classList.add('error');
+        return;
+    }
+
+    const users = getUsers();
+    if (users.find(u => u.email === email)) {
+        errorEl.textContent = 'Un compte existe déjà avec cet e-mail.';
+        document.getElementById('reg-email').classList.add('error');
+        return;
+    }
+
+    const newUser = { name, email, password: hashPassword(password) };
+    users.push(newUser);
+    saveUsers(users);
+    saveSession({ name, email });
+    updateNavbar();
+    document.getElementById('auth-modal').classList.remove('open');
+    document.body.style.overflow = '';
+    clearAuthForms();
+    showToast(`Compte créé ! Bienvenue, ${name.split(' ')[0]} 🎉`, 'success');
+}
+
+function logout() {
+    clearSession();
+    document.getElementById('user-dropdown').classList.remove('open');
+    updateNavbar();
+    showToast('Vous avez été déconnecté.', '');
+}
+
+// --- Navbar state ---
+
+function updateNavbar() {
+    const session  = getSession();
+    const navAuth  = document.getElementById('nav-auth');
+    const navUser  = document.getElementById('nav-user');
+
+    if (session) {
+        navAuth.style.display = 'none';
+        navUser.style.display = 'block';
+        const initials = getInitials(session.name);
+        document.getElementById('nav-avatar').textContent      = initials;
+        document.getElementById('dropdown-avatar').textContent = initials;
+        document.getElementById('nav-name').textContent        = session.name.split(' ')[0];
+        document.getElementById('dropdown-name').textContent   = session.name;
+        document.getElementById('dropdown-email').textContent  = session.email;
+    } else {
+        navAuth.style.display = 'flex';
+        navUser.style.display = 'none';
+    }
+}
+
+function toggleUserDropdown() {
+    document.getElementById('user-dropdown').classList.toggle('open');
+}
+
+// --- Helpers ---
+
+function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const isText = input.type === 'text';
+    input.type = isText ? 'password' : 'text';
+    btn.innerHTML = isText
+        ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`
+        : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+}
+
+let toastTimer = null;
+
+function showToast(message, type) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'toast' + (type ? ' ' + type : '');
+    clearTimeout(toastTimer);
+    // Force reflow
+    void toast.offsetWidth;
+    toast.classList.add('show');
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
+}
 
 // Détecter si on ouvre le fichier en local (file://)
 // et afficher un message si nécessaire

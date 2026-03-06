@@ -23,9 +23,37 @@
             <nav class="nav">
                 <a href="#" class="nav-link" onclick="showPage('home')">Accueil</a>
                 <a href="#" class="nav-link" onclick="showPage('years')">Cours</a>
-                <button class="btn-disabled" disabled title="Prototype — Fonctionnalité à venir">
-                    Connexion
-                </button>
+                <div class="nav-auth" id="nav-auth">
+                    <button class="btn-login" onclick="openAuthModal('login')">Connexion</button>
+                    <button class="btn-signup" onclick="openAuthModal('register')">S'inscrire</button>
+                </div>
+                <div class="nav-user" id="nav-user" style="display:none;">
+                    <div class="user-avatar-btn" onclick="toggleUserDropdown()">
+                        <div class="user-avatar" id="nav-avatar">?</div>
+                        <span class="user-name" id="nav-name">Utilisateur</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </div>
+                    <div class="user-dropdown" id="user-dropdown">
+                        <div class="dropdown-info">
+                            <div class="dropdown-avatar" id="dropdown-avatar">?</div>
+                            <div>
+                                <div class="dropdown-name" id="dropdown-name">Utilisateur</div>
+                                <div class="dropdown-email" id="dropdown-email">email@exemple.com</div>
+                            </div>
+                        </div>
+                        <hr class="dropdown-sep">
+                        <button class="dropdown-item dropdown-logout" onclick="logout()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                <polyline points="16 17 21 12 16 7"/>
+                                <line x1="21" y1="12" x2="9" y2="12"/>
+                            </svg>
+                            Déconnexion
+                        </button>
+                    </div>
+                </div>
             </nav>
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -38,7 +66,8 @@
         <div class="mobile-menu" id="mobileMenu">
             <a href="#" onclick="showPage('home'); toggleMobileMenu()">Accueil</a>
             <a href="#" onclick="showPage('years'); toggleMobileMenu()">Cours</a>
-            <button class="btn-disabled" disabled>Connexion (Prototype)</button>
+            <button class="btn-login" onclick="openAuthModal('login'); toggleMobileMenu()">Connexion</button>
+            <button class="btn-signup" onclick="openAuthModal('register'); toggleMobileMenu()">S'inscrire</button>
         </div>
     </header>
 
@@ -257,12 +286,103 @@
             </div>
             <p class="footer-text">Bibliothèque de cours de médecine en PDF</p>
             <div class="footer-links">
-                <button class="btn-disabled-small" disabled title="Prototype">Créer un compte</button>
-                <button class="btn-disabled-small" disabled title="Prototype">Contact</button>
+                <button class="btn-footer-link" onclick="openAuthModal('register')">Créer un compte</button>
+                <button class="btn-footer-link" onclick="openAuthModal('login')">Connexion</button>
             </div>
             <p class="footer-copyright">© 2024 Faczone — Prototype MVP</p>
         </div>
     </footer>
+
+    <!-- Auth Modal -->
+    <div class="modal-overlay" id="auth-modal" onclick="closeAuthModal(event)">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeAuthModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+
+            <!-- Logo -->
+            <div class="modal-brand">
+                <svg class="logo-icon" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="currentColor"/>
+                    <path d="M16 6L16 26M10 16L22 16M10 10L10 22M22 10L22 22" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+                <span>Faczone</span>
+            </div>
+
+            <!-- Tabs -->
+            <div class="modal-tabs">
+                <button class="modal-tab active" id="tab-login" onclick="switchTab('login')">Connexion</button>
+                <button class="modal-tab" id="tab-register" onclick="switchTab('register')">Inscription</button>
+            </div>
+
+            <!-- Login Form -->
+            <form class="auth-form" id="form-login" onsubmit="handleLogin(event)">
+                <p class="auth-subtitle">Bon retour ! Connectez-vous à votre compte.</p>
+                <div class="form-group">
+                    <label class="form-label">Adresse e-mail</label>
+                    <input class="form-input" type="email" id="login-email" placeholder="votre@email.com" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mot de passe</label>
+                    <div class="input-password">
+                        <input class="form-input" type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password">
+                        <button type="button" class="toggle-pw" onclick="togglePassword('login-password', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-error" id="login-error"></div>
+                <button type="submit" class="btn-primary btn-block">Se connecter</button>
+                <p class="auth-switch">Pas encore de compte ? <button type="button" class="link-btn" onclick="switchTab('register')">S'inscrire</button></p>
+            </form>
+
+            <!-- Register Form -->
+            <form class="auth-form hidden" id="form-register" onsubmit="handleRegister(event)">
+                <p class="auth-subtitle">Créez votre compte gratuitement.</p>
+                <div class="form-group">
+                    <label class="form-label">Prénom et nom</label>
+                    <input class="form-input" type="text" id="reg-name" placeholder="Votre nom complet" required autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Adresse e-mail</label>
+                    <input class="form-input" type="email" id="reg-email" placeholder="votre@email.com" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mot de passe</label>
+                    <div class="input-password">
+                        <input class="form-input" type="password" id="reg-password" placeholder="Minimum 6 caractères" required autocomplete="new-password">
+                        <button type="button" class="toggle-pw" onclick="togglePassword('reg-password', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Confirmer le mot de passe</label>
+                    <div class="input-password">
+                        <input class="form-input" type="password" id="reg-confirm" placeholder="Répétez le mot de passe" required autocomplete="new-password">
+                        <button type="button" class="toggle-pw" onclick="togglePassword('reg-confirm', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-error" id="register-error"></div>
+                <button type="submit" class="btn-primary btn-block">Créer mon compte</button>
+                <p class="auth-switch">Déjà un compte ? <button type="button" class="link-btn" onclick="switchTab('login')">Se connecter</button></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast"></div>
 
     <script src="js/catalogue.js"></script>
     <script src="js/app.js"></script>
