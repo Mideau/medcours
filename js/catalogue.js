@@ -73,8 +73,10 @@ const CATALOGUE = {
             { id: "semiologie",   name: "Sémiologie",   icon: "cardio"   }
         ],
         "d2": [
-            { id: "medecine-interne", name: "Médecine Interne", icon: "general" },
-            { id: "chirurgie",        name: "Chirurgie",         icon: "anatomy" }
+            { id: "medecine-interne", name: "Médecine Interne",  icon: "general"  },
+            { id: "chirurgie",        name: "Chirurgie",          icon: "anatomy"  },
+            { id: "pharmacologie",    name: "Pharmacologie",      icon: "pharma"   },
+            { id: "microbiologie",    name: "Mycologie",          icon: "micro"    }
         ]
     },
 
@@ -114,7 +116,8 @@ const CATALOGUE = {
             { id: "p1-gen-5", title: "Transcription",                              type: "Cours", pdf: "pdfs/trans 2 - Copie.pdf" },
             { id: "p1-gen-6", title: "Explorations Cytogénétiques",                type: "Cours", pdf: "pdfs/Expllorations cytogénétiques (2).pdf" },
             { id: "p1-gen-7", title: "Malformations Congénitales",                 type: "Cours", pdf: "pdfs/MALFORMATIONS CONGENITALESPrésentation1.pdf" },
-            { id: "p1-gen-8", title: "Embryologie de l'Appareil Génital",          type: "Cours", pdf: "pdfs/EMBRYOLOGIE DE L'APPAREIL GENITAl( MASCULIN  ET FEMININ) - première partie-Copie.pdf" }
+            { id: "p1-gen-8", title: "Embryologie de l'Appareil Génital",          type: "Cours", pdf: "pdfs/EMBRYOLOGIE DE L'APPAREIL GENITAl( MASCULIN  ET FEMININ) - première partie-Copie.pdf" },
+            { id: "p1-gen-9", title: "Anomalies Chromosomiques",                   type: "Cours", pdf: "pdfs/Anomalies chromosomiques.pdf" }
         ],
 
         // ----- P2 -----
@@ -169,6 +172,23 @@ const CATALOGUE = {
             { id: "d2-chir-1", title: "Appendicite Aiguë",         type: "Cours", pdf: "pdfs/Appendicite aiguë - Copie.pdf" },
             { id: "d2-chir-2", title: "Contusions Abdominales",     type: "Cours", pdf: "pdfs/contusions abdominales.pdf" },
             { id: "d2-chir-3", title: "Atrésie de l'Œsophage",     type: "Cours", pdf: "pdfs/ATRESIE DE L'OESOPHAGE.pdf" }
+        ],
+
+        "d2-pharmacologie": [
+            { id: "d2-pharma-1", title: "Dérivés Hétérocycliques Antiparasitaires", type: "Cours", pdf: "pdfs/2_Dérivés heterocycliques antiparasitaires.pdf" },
+            { id: "d2-pharma-2", title: "Les Antifongiques",                         type: "Cours", pdf: "pdfs/3_les antifongiques.pdf" },
+            { id: "d2-pharma-3", title: "Les Médicaments Antipaludiques",            type: "Cours", pdf: "pdfs/4_Les médicaments antipaludiques.pdf" },
+            { id: "d2-pharma-4", title: "Les Dérivés Phénicolés",                    type: "Cours", pdf: "pdfs/5_les Dérivés phénicolés.pdf" },
+            { id: "d2-pharma-5", title: "Les Cyclines",                               type: "Cours", pdf: "pdfs/5_les cyclines.pdf" }
+        ],
+
+        "d2-microbiologie": [
+            { id: "d2-micro-1", title: "Généralités sur les Champignons et les Mycoses", type: "Cours", pdf: "pdfs/Generalites sur les Champignons et les mycoses.pdf" },
+            { id: "d2-micro-2", title: "Candidoses",                                      type: "Cours", pdf: "pdfs/Candidoses 4e Pcie 2016_2017.pdf",       date: "2016-2017" },
+            { id: "d2-micro-3", title: "Cryptococcose",                                   type: "Cours", pdf: "pdfs/Cryptococcos.pdf" },
+            { id: "d2-micro-4", title: "Blastomycose",                                    type: "Cours", pdf: "pdfs/BLASTOMYCOSE ucad 2016.pdf",              date: "2016" },
+            { id: "d2-micro-5", title: "Dermatophyties",                                  type: "Cours", pdf: "pdfs/Dermatophyties 4e Annne Phcie 2015_2016.pdf", date: "2015-2016" },
+            { id: "d2-micro-6", title: "Chromomycose",                                    type: "Cours", pdf: "pdfs/La chromomycose.pdf" }
         ]
     }
 };
